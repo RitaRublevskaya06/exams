@@ -1,0 +1,20 @@
+{
+  "name": "pskp_exam",
+  "version": "1.0.0",
+  "description": "Примеры для экзамена",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^4.22.2",
+    "form-data": "^4.0.6",
+    "graphql": "^17.0.1",
+    "mongodb": "^7.3.0",
+    "mssql": "^12.5.5",
+    "pg": "^8.21.0",
+    "redis": "^3.1.2",
+    "sequelize": "^6.37.8",
+    "ws": "^8.17.0"
+  }
+}

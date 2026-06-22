@@ -1,0 +1,126 @@
+# 1. Инициализация модуля
+go mod init exam
+
+# 2. Установка всех зависимостей
+go get github.com/gorilla/mux
+go get github.com/gorilla/websocket
+go get github.com/graph-gophers/graphql-go
+go get golang.org/x/net/webdav
+go get gorm.io/gorm
+go get gorm.io/driver/sqlite
+go get github.com/microsoft/go-mssqldb
+
+# 3. Подтягивание зависимостей
+go mod tidy
+
+# 4. Запуск (все серверы на разных портах)
+go run main.go
+
+
+Задания				Зависимости									            Команда установки
+1-19 (без внешних)	нет (только стандартная библиотека)				        - (go mod init task1-19)
+20 (database/sql)	github.com/microsoft/go-mssqldb					    	go get github.com/microsoft/go-mssqldb
+21 (GORM)			gorm.io/gorm, gorm.io/driver/sqlite				    	go get gorm.io/gorm && go get gorm.io/driver/sqlite
+22-32 (mux)			github.com/gorilla/mux						    		go get github.com/gorilla/mux
+33 (JSON-RPC)		нет (стандартная библиотека)				    		- (go mod init task1-19)
+34-35 (WebSocket)	github.com/gorilla/websocket					    	go get github.com/gorilla/websocket
+36 (WebDAV)			golang.org/x/net/webdav							        go get golang.org/x/net/webdav
+37 (GraphQL)	    github.com/graph-gophers/graphql-go					    go get github.com/graph-gophers/graphql-go
+38 (Iris+Swagger)	github.com/kataras/iris/v12, github.com/swaggo/swag	    go get github.com/kataras/iris/v12 && go install github.com/swaggo/swag/cmd/swag@latest
+
+
+
+# Задание 22 - простой HTTP
+curl http://localhost:8082/task22
+
+# Задание 23 - логирование
+curl http://localhost:8083/task23/about
+
+# Задание 24 - POST JSON
+curl -X POST http://localhost:8084/task24/user -H "Content-Type: application/json" -d '{"name":"John","email":"john@ex.com"}'
+
+# Задание 25 - gorilla/mux + JSON
+curl http://localhost:8085/task25/api/data
+
+# Задание 26 - form-data
+curl -X POST http://localhost:8086/task26/form/123 -d 'name=Alice&email=a@ex.com'
+
+# Задание 27 - REST API
+curl http://localhost:8087/task27/products
+curl -X POST http://localhost:8087/task27/products -H "Content-Type: application/json" -d '{"id":"3","name":"New Product"}'
+
+# Задание 28 - path-параметры
+curl http://localhost:8088/task28/users/123
+
+# Задание 29 - query-параметры
+curl "http://localhost:8089/task29/search?q=golang&page=2"
+
+# Задание 30 - статические файлы
+curl http://localhost:8090/task30/static/test.txt
+
+# Задание 31 - загрузка файлов
+curl -X POST -F "file=@./static/test.txt" http://localhost:8091/task31/upload
+
+# Задание 32 - маршрутизация по query
+curl "http://localhost:8092/task32/data?action=create"
+curl "http://localhost:8092/task32/data?action=delete"
+
+# Задание 33 - JSON-RPC
+curl -X POST http://localhost:8093/task33/rpc -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"add","params":[5,3],"id":1}'
+
+# Задание 34 - WebSocket (требуется специальный клиент)
+# Используйте wscat или браузер
+
+# Задание 35 - WebSocket в браузере
+# Откройте: http://localhost:8095/task35/
+
+# Задание 36 - WebDAV
+# Используйте cadaver или любой WebDAV клиент
+cadaver http://localhost:8096/
+
+# Задание 37 - GraphQL
+curl -X POST http://localhost:8097/task37/graphql -H "Content-Type: application/json" -d '{"query": "query { hello }"}'
+curl -X POST http://localhost:8097/task37/graphql -H "Content-Type: application/json" -d '{"query": "query { listUsers { id name age } }"}'
+curl -X POST http://localhost:8097/task37/graphql -H "Content-Type: application/json" -d '{"query": "mutation { createUser(name: \"Charlie\", age: 35) { id name age } }"}'
+
+# Задание 38 - Iris + Swagger
+# Требует дополнительной установки
+swag init
+http://localhost:8098/swagger/index.html
+
+
+
+
+
+
+1-19
+
+# Создание модуля (ЗАДАНИЕ 2,3)
+go mod init exam19
+
+# Запуск (ЗАДАНИЕ 2)
+go run main.go
+
+# Сборка (ЗАДАНИЕ 2)
+go build -o exam19 main.go
+
+
+20-38
+go mod init exam_all
+go get github.com/gorilla/mux
+go get github.com/gorilla/websocket
+go get github.com/graph-gophers/graphql-go
+go get golang.org/x/net/webdav
+go get gorm.io/gorm
+go get gorm.io/driver/sqlite
+go get github.com/microsoft/go-mssqldb
+
+
+
+
+1-38
+go mod init exam
+
+go get github.com/gorilla/mux github.com/gorilla/websocket github.com/gorilla/handlers github.com/microsoft/go-mssqldb gorm.io/gorm gorm.io/driver/sqlite
+
+go run main.go

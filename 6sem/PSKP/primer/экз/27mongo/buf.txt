@@ -1,0 +1,35 @@
+-------------------------- FACULTY ---------------------------------------
+// GET /api/faculties
+// POST /api/faculties
+{
+	"faculty": "faculty",
+    "faculty_name": "FACULTY"
+}
+// PUT /api/faculties
+{
+    "_id": "6926f2467638e39f4013f787",
+    "faculty": "faculty",
+    "faculty_name": "FACULTY"
+}
+// DELETE /api/faculties/faculty
+
+
+
+------------------------ PULPIT -------------------------------------------
+// GET /api/pulpits
+// POST /api/pulpits
+{
+	"pulpit": "pulpit",
+	"pulpit_name": "PULPIT",
+	"faculty": "ИТ"
+}
+// PUT /api/pulpits
+{
+	"_id": "6926f3e15559d29257844fb6",
+	"pulpit": "pulpit",
+	"pulpit_name": "PULPIT",
+	"faculty": "ИТ"
+}
+// DELETE /api/pulpits/pulpit
+
+

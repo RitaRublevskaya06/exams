@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+}
+button{
+    background-color: rgb(179, 214, 255);
+    height: 25px;
+    width: 200px;
+    font-size: 16px;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px rgb(191, 191, 191);
+}
+li{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+li > form > button{
+    width: 100px;
+}
+input{
+    height: 24px;
+    width: 200px;
+    border-radius: 4px;
+    border: 1px solid gray;
+}
+.formEdit > input:first-child{
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+main {
+    margin-top: 20px;
+}
+
+.formCreate{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formEdit > button{
+    width: 100px;
+    font-size: 14px;
+}

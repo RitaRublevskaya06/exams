@@ -1,0 +1,285 @@
+// // ПРАКТИЧЕСКИЙ КОД ПО ВОПРОСАМ 1-19
+// // Задания 1-19: Демонстрация основ GO
+
+// package main
+
+// import (
+//     "bufio"
+//     "fmt"
+//     "io"
+//     "os"
+//     "strings"
+//     "sync"
+//     "time"
+// )
+
+// // ЗАДАНИЕ 1: GO определение и свойства (демонстрация горутин, статической типизации)
+// // ЗАДАНИЕ 2: CLI команды (go run, go build, go mod init)
+
+// // ЗАДАНИЕ 10: пользовательский тип
+// type Celsius float64
+
+// // ЗАДАНИЕ 11: алиас
+// type UserID = string
+
+// // ЗАДАНИЕ 12: структура
+// type Person struct {
+//     Name string
+//     Age  int
+// }
+
+// // Метод структуры
+// func (p Person) Greet() string {
+//     return "Hello, " + p.Name
+// }
+
+// // ЗАДАНИЕ 17: функция с несколькими возвращаемыми значениями
+// func divide(a, b int) (int, error) {
+//     if b == 0 {
+//         return 0, fmt.Errorf("division by zero")
+//     }
+//     return a / b, nil
+// }
+
+// // ЗАДАНИЕ 17: функция как значение
+// func applyOperation(f func(int, int) int, x, y int) int {
+//     return f(x, y)
+// }
+
+// // ЗАДАНИЕ 17: variadic функция
+// func sum(nums ...int) int {
+//     total := 0
+//     for _, n := range nums {
+//         total += n
+//     }
+//     return total
+// }
+
+// // ЗАДАНИЕ 17: замыкание
+// func counter() func() int {
+//     count := 0
+//     return func() int {
+//         count++
+//         return count
+//     }
+// }
+
+// // ЗАДАНИЕ 18: worker для демонстрации горутин
+// func worker(id int, wg *sync.WaitGroup) {
+//     defer wg.Done()
+//     fmt.Printf("Worker %d starting\n", id)
+//     time.Sleep(500 * time.Millisecond)
+//     fmt.Printf("Worker %d done\n", id)
+// }
+
+// // ЗАДАНИЕ 18: функция для каналов
+// func producer(ch chan<- int) {
+//     for i := 0; i < 5; i++ {
+//         ch <- i
+//         time.Sleep(100 * time.Millisecond)
+//     }
+//     close(ch)
+// }
+
+// func consumer(ch <-chan int) {
+//     for val := range ch {
+//         fmt.Printf("Received: %d\n", val)
+//     }
+// }
+
+// // ЗАДАНИЕ 19: функция работы с файлами
+// func fileOperations() error {
+//     // Создание директории
+//     os.MkdirAll("./testdata", 0755)
+    
+//     // Запись файла целиком
+//     data := []byte("Hello, GO File System!\nSecond line")
+//     err := os.WriteFile("./testdata/output.txt", data, 0644)
+//     if err != nil {
+//         return err
+//     }
+    
+//     // Чтение файла целиком
+//     readData, err := os.ReadFile("./testdata/output.txt")
+//     if err != nil {
+//         return err
+//     }
+//     fmt.Println("Read file content:", string(readData))
+    
+//     // Буферизированное копирование
+//     src, _ := os.Create("./testdata/source.txt")
+//     src.WriteString("Source content")
+//     src.Close()
+    
+//     dst, _ := os.Create("./testdata/dest.txt")
+//     src2, _ := os.Open("./testdata/source.txt")
+//     io.Copy(dst, src2)
+//     src2.Close()
+//     dst.Close()
+    
+//     // Буферизированное чтение
+//     file, _ := os.Open("./testdata/output.txt")
+//     scanner := bufio.NewScanner(file)
+//     for scanner.Scan() {
+//         fmt.Println("Line:", scanner.Text())
+//     }
+//     file.Close()
+    
+//     // Чтение директории
+//     entries, _ := os.ReadDir("./testdata")
+//     for _, entry := range entries {
+//         fmt.Printf("File: %s, IsDir: %v\n", entry.Name(), entry.IsDir())
+//     }
+    
+//     return nil
+// }
+
+// func main() {
+//     fmt.Println("=== ЗАДАНИЯ 1-19: ДЕМОНСТРАЦИЯ ОСНОВ GO ===\n")
+    
+//     // ЗАДАНИЕ 3-4: структура проекта, пакеты, экспорт (package main, func main)
+//     fmt.Println("ЗАДАНИЕ 3-4: Структура проекта - package main, func main")
+    
+//     // ЗАДАНИЕ 5: фундаментальные типы, константы
+//     fmt.Println("\n=== ЗАДАНИЕ 5: Фундаментальные типы ===")
+//     var b bool = true
+//     var i int = 42
+//     var f float64 = 3.14
+//     var s string = "Hello, GO"
+//     const Pi = 3.14159
+//     fmt.Printf("bool: %v, int: %d, float: %.2f, string: %s, const Pi: %.5f\n", b, i, f, s, Pi)
+    
+//     // ЗАДАНИЕ 6: указатели
+//     fmt.Println("\n=== ЗАДАНИЕ 6: Указатели ===")
+//     x := 10
+//     p := &x
+//     fmt.Printf("x = %d, *p = %d\n", x, *p)
+//     *p = 20
+//     fmt.Printf("After *p = 20: x = %d\n", x)
+    
+//     // ЗАДАНИЕ 7: массивы, многомерные массивы
+//     fmt.Println("\n=== ЗАДАНИЕ 7: Массивы ===")
+//     arr := [3]int{1, 2, 3}
+//     matrix := [2][2]int{{1, 2}, {3, 4}}
+//     fmt.Printf("Array: %v\n", arr)
+//     fmt.Printf("2D Array: %v\n", matrix)
+    
+//     // ЗАДАНИЕ 8: срезы (slice)
+//     fmt.Println("\n=== ЗАДАНИЕ 8: Срезы (slice) ===")
+//     slice := []int{1, 2, 3, 4, 5}
+//     slice = append(slice, 6, 7)
+//     fmt.Printf("Slice: %v, len=%d, cap=%d\n", slice, len(slice), cap(slice))
+//     subSlice := slice[1:4]
+//     fmt.Printf("Sub-slice: %v\n", subSlice)
+    
+//     // ЗАДАНИЕ 9: map
+//     fmt.Println("\n=== ЗАДАНИЕ 9: Map ===")
+//     m := make(map[string]int)
+//     m["apple"] = 5
+//     m["banana"] = 3
+//     fmt.Printf("Map: %v\n", m)
+//     if val, ok := m["apple"]; ok {
+//         fmt.Printf("apple = %d\n", val)
+//     }
+//     delete(m, "banana")
+//     fmt.Printf("After delete: %v\n", m)
+    
+//     // ЗАДАНИЕ 10: пользовательский тип
+//     fmt.Println("\n=== ЗАДАНИЕ 10: Пользовательский тип ===")
+//     var temp Celsius = 25.5
+//     fmt.Printf("Temperature: %.1f°C\n", temp)
+    
+//     // ЗАДАНИЕ 11: алиас
+//     fmt.Println("\n=== ЗАДАНИЕ 11: Алиас ===")
+//     var uid UserID = "user-123"
+//     var regularString string = uid  // прямое присваивание (алиас совместим)
+//     fmt.Printf("UserID: %s, as string: %s\n", uid, regularString)
+    
+//     // ЗАДАНИЕ 12: структуры
+//     fmt.Println("\n=== ЗАДАНИЕ 12: Структуры ===")
+//     p1 := Person{Name: "Alice", Age: 30}
+//     fmt.Printf("Person: %+v\n", p1)
+//     fmt.Println(p1.Greet())
+    
+//     // ЗАДАНИЕ 13: строки и пакет strings
+//     fmt.Println("\n=== ЗАДАНИЕ 13: Строки ===")
+//     str := "Hello, World!"
+//     fmt.Printf("Contains 'World': %v\n", strings.Contains(str, "World"))
+//     fmt.Printf("Split: %v\n", strings.Split(str, ", "))
+//     fmt.Printf("ToUpper: %s\n", strings.ToUpper(str))
+    
+//     // ЗАДАНИЕ 14: операции
+//     fmt.Println("\n=== ЗАДАНИЕ 14: Операции ===")
+//     a, bVal := 10, 3
+//     fmt.Printf("%d + %d = %d\n", a, bVal, a+bVal)
+//     fmt.Printf("%d & %d = %d\n", a, bVal, a&bVal)
+//     fmt.Printf("%d | %d = %d\n", a, bVal, a|bVal)
+    
+//     // ЗАДАНИЕ 15: if и switch
+//     fmt.Println("\n=== ЗАДАНИЕ 15: if и switch ===")
+//     score := 85
+//     if score >= 60 {
+//         fmt.Println("Passed")
+//     }
+    
+//     switch {
+//     case score >= 90:
+//         fmt.Println("Grade: A")
+//     case score >= 80:
+//         fmt.Println("Grade: B")
+//     default:
+//         fmt.Println("Grade: C")
+//     }
+    
+//     // ЗАДАНИЕ 16: циклы
+//     fmt.Println("\n=== ЗАДАНИЕ 16: Циклы ===")
+//     fmt.Print("For loop: ")
+//     for i := 0; i < 5; i++ {
+//         fmt.Printf("%d ", i)
+//     }
+//     fmt.Println()
+    
+//     fmt.Print("Range over slice: ")
+//     for idx, val := range slice[:3] {
+//         fmt.Printf("[%d]=%d ", idx, val)
+//     }
+//     fmt.Println()
+    
+//     // ЗАДАНИЕ 17: функции
+//     fmt.Println("\n=== ЗАДАНИЕ 17: Функции ===")
+//     result, err := divide(10, 2)
+//     if err == nil {
+//         fmt.Printf("10 / 2 = %d\n", result)
+//     }
+    
+//     add := func(x, y int) int { return x + y }
+//     fmt.Printf("applyOperation(add, 5, 3) = %d\n", applyOperation(add, 5, 3))
+//     fmt.Printf("sum(1,2,3,4) = %d\n", sum(1, 2, 3, 4))
+    
+//     cnt := counter()
+//     fmt.Printf("Counter: %d, %d, %d\n", cnt(), cnt(), cnt())
+    
+//     // ЗАДАНИЕ 18: горутины
+//     fmt.Println("\n=== ЗАДАНИЕ 18: Горутины ===")
+//     var wg sync.WaitGroup
+//     for i := 1; i <= 3; i++ {
+//         wg.Add(1)
+//         go worker(i, &wg)
+//     }
+    
+//     // Каналы
+//     ch := make(chan int)
+//     go producer(ch)
+//     go consumer(ch)
+    
+//     wg.Wait()
+//     time.Sleep(500 * time.Millisecond) // даем время consumer'у завершиться
+    
+//     // ЗАДАНИЕ 19: файловая система
+//     fmt.Println("\n=== ЗАДАНИЕ 19: Файловая система ===")
+//     if err := fileOperations(); err != nil {
+//         fmt.Printf("File error: %v\n", err)
+//     }
+    
+//     fmt.Println("\n=== ВСЕ ЗАДАНИЯ 1-19 ВЫПОЛНЕНЫ ===")
+// }

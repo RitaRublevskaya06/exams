@@ -1,0 +1,338 @@
+1) Нажмите Ctrl + Shift + F
+2) Нажмите на маленькую стрелочку (или иконку *. **), чтобы включить режим регулярных выражений (Regex).
+3) В поле Search вставьте регулярное выражение: //.*
+примечание при жатии на стрелочку объязательно нажать ".*" в поле "Найти" (это кнопочка)
+
+
+Как запускать на экзамене
+Один раз из корня:
+
+npm install
+Перед каждым новым заданием — останови предыдущий сервер (Ctrl+C), иначе будет ошибка EADDRINUSE (порт 3000 занят).
+
+Группа	Команда
+16–32
+node 16/16_http_server_404.js и т.д.
+33–37
+node 33/33_websocket_browser.js (нужен ws)
+38–45
+Нужны запущенные БД (PostgreSQL, MongoDB, Redis)
+46–53
+node 46/46_express_middleware_routes.js и т.д.
+54
+cd 54 → npm install → npm run start:dev
+55
+cd 55 → npm install → npm run start:dev
+Все команды есть в запуск.txt.
+
+
+
+:: Перед запуском нового задания остановите предыдущий сервер (Ctrl+C в терминале)
+
+:: Установка всех зависимостей (один раз из корня проекта)
+npm install
+
+:: Для заданий 31 (upload)
+npm install form-data
+
+:: Для заданий 38-45 (базы данных)
+npm install pg mongodb redis sequelize
+
+:: Для заданий 46-53 (Express)
+npm install express cookie-parser
+
+:: Глобальная установка nodemon
+npm install -g nodemon
+
+
+
+
+
+# Задание 16 - Простейший HTTP сервер с 404
+node 16/16_http_server_404.js
+
+# Задание 17 - HTTP сервер с маршрутизацией и 405
+node 17/17_http_server_405.js
+
+# Задание 18 - Обработка route-параметров
+node 18/18_http_server_route_params.js
+
+# Задание 19 - Обработка query-параметров
+node 19/19_http_server_query_params.js
+
+# Задание 20 - Обработка body-параметров
+node 20/20_http_server_body_params.js
+
+# Задание 21 - JSON сообщения
+node 21/21_http_server_json.js
+
+# Задание 22 - Download файлов
+node 22/22_http_server_download.js
+
+# Задание 23 - Upload файлов
+node 23/23_http_server_upload.js
+
+# Задание 24 - x-www-form-urlencoded
+node 24/24_http_server_urlencoded.js
+
+# Задание 25 - multipart/form-data
+node 25/25_http_server_multipart.js
+
+# Задание 26 - HTTP клиент с route-параметрами
+node 26/26_http_client_route_params.js
+
+# Задание 27 - HTTP клиент с query-параметрами
+node 27/27_http_client_query_params.js
+
+# Задание 28 - HTTP клиент с body-параметрами
+node 28/28_http_client_body_params.js
+
+# Задание 29 - HTTP клиент с JSON
+node 29/29_http_client_json.js
+
+# Задание 30 - HTTP клиент download
+node 30/30_http_client_download.js
+
+# Задание 31 - HTTP клиент upload
+node 31/31_http_client_upload.js
+
+# Задание 32 - HTTP сервер с stdin/stdout
+node 32/32_http_server_stdio.js
+
+# Задание 33 - WebSocket браузер + сервер
+node 33/33_websocket_browser.js
+
+# Задание 34 - WebSocket ping/pong
+node 34/34_websocket_ping_pong.js
+
+# Задание 35 - Широковещательный WebSocket
+node 35/35_websocket_broadcast.js
+
+# Задание 36 - WebSocket JSON сообщения
+node 36/36_websocket_json.js
+
+# Задание 37 - WebSocket RPC сервер
+node 37/37_websocket_rpc.js
+
+# Задание 38-45 - Базы данных (требуют установки БД)
+sa
+StrongPass_2026!
+
+--- для 44:
+cd D:\Programs\Redis\
+./redis-server.exe
+
+
+
+node 38/38_http_server_sql_select.js
+node 39/39_http_server_sql_insert.js
+node 40/40_http_server_sql_update.js
+node 41/41_http_server_sql_delete.js
+node 42/42_http_server_mongodb.js
+node 43/43_http_server_graphql.js
+node 44/44_http_server_redis.js
+node 45/45_http_server_sequelize.js
+
+# Задание 46-53 - Express
+node 46/46_express_middleware_routes.js
+node 47/47_express_route_params.js
+node 48/48_express_query_params.js
+node 49/49_express_body_params.js
+node 50/50_express_json.js
+node 51/51_express_static_download.js
+node 52/52_express_cookie.js
+node 53/53_express_redirect.js
+
+# Задание 54 - NestJS (модуль, контроллер, сервис, фильтр)
+cd 54
+npm install
+npm run start:dev
+
+# Задание 55 - NestJS + TypeORM (SQLite, PostgreSQL не нужен)
+cd 55
+npm install
+npm run start:dev
+
+
+
+
+
+# ===== ЗАДАНИЕ 16 - Проверка 404 =====
+Invoke-WebRequest -Uri "http://localhost:3000/"
+Invoke-WebRequest -Uri "http://localhost:3000/notfound"
+
+# ===== ЗАДАНИЕ 17 - Проверка методов HTTP =====
+Invoke-WebRequest -Uri "http://localhost:3000/api/resource" -Method GET
+Invoke-WebRequest -Uri "http://localhost:3000/api/resource" -Method POST
+Invoke-WebRequest -Uri "http://localhost:3000/api/resource" -Method PUT
+Invoke-WebRequest -Uri "http://localhost:3000/api/resource" -Method DELETE
+
+# ===== ЗАДАНИЕ 18 - Проверка route-параметров =====
+Invoke-WebRequest -Uri "http://localhost:3000/users/123/posts/456"
+Invoke-WebRequest -Uri "http://localhost:3000/products/789"
+
+# ===== ЗАДАНИЕ 19 - Проверка query-параметров =====
+Invoke-WebRequest -Uri "http://localhost:3000/search?q=nodejs&page=2&limit=10"
+Invoke-WebRequest -Uri "http://localhost:3000/filter?category=books&price_min=100&price_max=500&inStock=true"
+
+# ===== ЗАДАНИЕ 20 - Проверка body-параметров =====
+$body = "username=john&email=john@test.com&age=25"
+Invoke-WebRequest -Uri "http://localhost:3000/submit" -Method POST -Body $body -ContentType "application/x-www-form-urlencoded"
+
+$body = "name=Alice&email=alice@test.com&password=12345"
+Invoke-WebRequest -Uri "http://localhost:3000/register" -Method POST -Body $body -ContentType "application/x-www-form-urlencoded"
+
+# ===== ЗАДАНИЕ 21 - Проверка JSON =====
+$body = '{"name":"John","age":30,"city":"Minsk"}' | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/api/json" -Method POST -Body $body -ContentType "application/json"
+Invoke-WebRequest -Uri "http://localhost:3000/api/json" -Method GET
+
+# ===== ЗАДАНИЕ 22 - Проверка download =====
+Invoke-WebRequest -Uri "http://localhost:3000/download?file=test.txt" -OutFile "downloaded.txt"
+
+# ===== ЗАДАНИЕ 23 - Проверка upload =====
+$form = @{ file = Get-Item "C:\test.txt" }
+Invoke-WebRequest -Uri "http://localhost:3000/upload" -Method POST -Form $form
+
+# ===== ЗАДАНИЕ 24 - Проверка x-www-form-urlencoded =====
+$body = "name=John&email=john@test.com&age=25&message=Hello"
+Invoke-WebRequest -Uri "http://localhost:3000/form" -Method POST -Body $body -ContentType "application/x-www-form-urlencoded"
+
+# ===== ЗАДАНИЕ 25 - Проверка multipart/form-data =====
+$form = @{ username = "john"; file = Get-Item "C:\file.txt" }
+Invoke-WebRequest -Uri "http://localhost:3000/upload" -Method POST -Form $form
+
+# ===== ЗАДАНИЕ 38 - SQL SELECT =====
+(Invoke-WebRequest -Uri "http://localhost:3000/users").Content | ConvertFrom-Json
+(Invoke-WebRequest -Uri "http://localhost:3000/users/1").Content | ConvertFrom-Json
+(Invoke-WebRequest -Uri "http://localhost:3000/users/search?name=alice").Content | ConvertFrom-Json
+
+# ===== ЗАДАНИЕ 39 - SQL INSERT =====
+$body = @{name="New Product"; price=49.99; stock=100} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/products" -Method POST -Body $body -ContentType "application/json"
+
+# ===== ЗАДАНИЕ 40 - SQL UPDATE =====
+$body = @{name="Updated"; price=59.99} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/products/1" -Method PUT -Body $body -ContentType "application/json"
+
+# ===== ЗАДАНИЕ 41 - SQL DELETE =====
+Invoke-WebRequest -Uri "http://localhost:3000/users/1" -Method DELETE
+Invoke-WebRequest -Uri "http://localhost:3000/users?confirm=true" -Method DELETE
+
+# ===== ЗАДАНИЕ 42 - MongoDB =====
+(Invoke-WebRequest -Uri "http://localhost:3000/items").Content | ConvertFrom-Json
+$body = @{name="Test Item"; value=123} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/items" -Method POST -Body $body -ContentType "application/json"
+
+# ===== ЗАДАНИЕ 43 - GraphQL =====
+$body = @{query="{users{id,name}}"} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/graphql" -Method POST -Body $body -ContentType "application/json"
+
+# ===== ЗАДАНИЕ 44 - Redis =====
+$body = @{key="mykey"; value="Hello"; ttl=60} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/set" -Method POST -Body $body -ContentType "application/json"
+(Invoke-WebRequest -Uri "http://localhost:3000/get/mykey").Content | ConvertFrom-Json
+$body = @{key="counter"; by=5} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/incr" -Method POST -Body $body -ContentType "application/json"
+Invoke-WebRequest -Uri "http://localhost:3000/del/mykey" -Method DELETE
+
+# ===== ЗАДАНИЕ 45 - Sequelize =====
+(Invoke-WebRequest -Uri "http://localhost:3000/products").Content | ConvertFrom-Json
+$body = @{name="Sequelize Product"; price=99.99; category="Electronics"} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/products" -Method POST -Body $body -ContentType "application/json"
+
+# ===== ЗАДАНИЕ 46-48 - Express =====
+Invoke-WebRequest -Uri "http://localhost:3000/users/123"
+Invoke-WebRequest -Uri "http://localhost:3000/api/status"
+Invoke-WebRequest -Uri "http://localhost:3000/search?q=express&page=2"
+Invoke-WebRequest -Uri "http://localhost:3000/filter?category=electronics&minPrice=100"
+
+# ===== ЗАДАНИЕ 49-50 - Express body/JSON =====
+$body = "username=john&email=john@test.com"
+Invoke-WebRequest -Uri "http://localhost:3000/submit-form" -Method POST -Body $body -ContentType "application/x-www-form-urlencoded"
+$body = @{title="Test"; content="Hello"} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/api/data" -Method POST -Body $body -ContentType "application/json"
+
+# ===== ЗАДАНИЕ 51 - Express static =====
+Invoke-WebRequest -Uri "http://localhost:3000/style.css"
+Invoke-WebRequest -Uri "http://localhost:3000/download/style.css" -OutFile "style.css"
+
+# ===== ЗАДАНИЕ 52 - Express cookie =====
+$response = Invoke-WebRequest -Uri "http://localhost:3000/set-cookie" -SessionVariable session
+Invoke-WebRequest -Uri "http://localhost:3000/get-cookies" -WebSession $session
+
+# ===== ЗАДАНИЕ 53 - Express redirect =====
+Invoke-WebRequest -Uri "http://localhost:3000/old-page" -MaximumRedirection 0
+Invoke-WebRequest -Uri "http://localhost:3000/temp-redirect" -MaximumRedirection 0
+
+# ===== ЗАДАНИЕ 54-55 - NestJS =====
+(Invoke-WebRequest -Uri "http://localhost:3000/users").Content | ConvertFrom-Json
+$body = @{name="Nest User"; email="nest@test.com"; age=25} | ConvertTo-Json
+Invoke-WebRequest -Uri "http://localhost:3000/users" -Method POST -Body $body -ContentType "application/json"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Установка и запуск баз данных
+PostgreSQL (для 38-41, 45):
+# Windows (CMD как администратор)
+net start postgresql-x64-15
+
+# Или через PowerShell
+Start-Service postgresql
+
+# Создание базы данных
+createdb testdb
+
+# Подключение
+psql -U postgres -d testdb
+
+# macOS
+brew install postgresql
+brew services start postgresql
+createdb testdb
+
+# Linux
+sudo service postgresql start
+sudo -u postgres createdb testdb
+
+
+MongoDB (42):
+# Windows - создайте папку для данных
+mkdir C:\data\db
+
+# Запуск MongoDB
+mongod --dbpath C:\data\db
+
+# Или через службу
+net start MongoDB
+
+# macOS
+brew install mongodb-community
+brew services start mongodb-community
+
+# Linux
+sudo systemctl start mongod
+
+
+Redis (44):
+# Windows (скачайте с https://github.com/microsoftarchive/redis/releases)
+redis-server
+
+# macOS
+brew install redis
+brew services start redis
+
+# Linux
+sudo systemctl start redis-server

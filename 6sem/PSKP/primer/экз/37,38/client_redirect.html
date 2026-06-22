@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование редиректов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        h3 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+        .info {
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        hr {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+       
+
+        <h3>Тест 1: 301 редирект (постоянный)</h3>
+        <button onclick="testRedirect('/old')">GET /old → /new</button>
+
+        <h3>Тест 2: 307 редирект (временный)</h3>
+        <button onclick="testRedirect('/temp')">GET /temp → /destination</button>
+
+        <hr>
+
+        <h3>Результат:</h3>
+        <div id="result" class="result">
+        </div>
+
+        <button onclick="clearResult()" style="background: #6c757d;">Очистить</button>
+    </div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        function clearResult() {
+            resultDiv.innerHTML = 'Очищено...';
+        }
+
+        async function testRedirect(url) {
+            resultDiv.innerHTML = `Выполняется запрос к ${url}...\n`;
+            
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                
+                resultDiv.innerHTML += `\nФинальный URL: ${response.url}\n`;
+                resultDiv.innerHTML += `Статус: ${response.status}\n`;
+                resultDiv.innerHTML += `Ответ сервера: ${text}\n`;
+            } catch (error) {
+                resultDiv.innerHTML += `\nОшибка: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

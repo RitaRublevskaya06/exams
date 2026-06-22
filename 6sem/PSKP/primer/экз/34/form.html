@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Отправка формы</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h2>Отправить данные на сервер</h2>
+    
+    <form action="http://localhost:5000/submit" method="POST" enctype="application/x-www-form-urlencoded">
+        <label>Имя:</label><br>
+        <input type="text" name="name" required><br><br>
+        
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+        
+        <label>Возраст:</label><br>
+        <input type="number" name="age"><br><br>
+        
+        <label>Сообщение:</label><br>
+        <textarea name="message"></textarea><br><br>
+        
+        <button type="submit">Отправить</button>
+    </form>
+    
+    <h2>Регистрация</h2>
+    <form action="http://localhost:5000/register" method="POST" enctype="application/x-www-form-urlencoded">
+        <label>Имя пользователя:</label><br>
+        <input type="text" name="username" required><br><br>
+        
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+        
+        <label>Пароль:</label><br>
+        <input type="password" name="password" required><br><br>
+        
+        <label>Подтвердите пароль:</label><br>
+        <input type="password" name="confirmPassword" required><br><br>
+        
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</body>
+</html>

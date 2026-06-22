@@ -1,0 +1,42 @@
+Вот первая нумерация вашего списка (сохранён оригинальный порядок, но убраны неверные цифры `16`, `17` и т.д., которые были перед каждым пунктом, оставлены номера из колонки слева):
+
+1. 1Node.JS: структура простейшего HTTP-сервера. Генерация ответа с кодом 404.
+2. 2Node.JS: HTTP-сервер, маршрутизация. Обработка GET, POST, PUT и DELETE-запросов. Генерация ответа с кодом 405.
+3. 3Node.JS: HTTP-сервер, обработка route(uri)-параметров.
+4. 4Node.JS: HTTP-сервер, обработка query-параметров.
+5. 5Node.JS: HTTP-сервер, обработка body-параметров.
+6. 6Node.JS: HTTP-сервер, обработка json-сообщения (в запросе и ответе).
+7. 7Node.JS: HTTP-сервер, download фалов.
+8. 8Node.JS: HTTP-сервер, upload фалов.
+9. 9Node.JS: обработка POST-запроса с content-type: x-www-form-urlencoded.
+10. 10Node.JS: обработка POST-запроса с content-type: multipart/form-data.
+11. 11Node.JS: http-клиент: генерация запроса с route-параметрами.
+12. 12Node.JS: http-клиент: генерация запроса с query-параметрами.
+13. 13Node.JS: http-клиент: генерация запроса с body-параметрами.
+14. 14Node.JS: http-клиент: генерация POST-запроса c json-сообщением.
+15. 15Node.JS: http-клиент: обработка download–файлов.
+16. 16Node.JS: http-клиент: отправка upload–файлов.
+17. 17Node.JS: http-сервер: применение стандартного ввода и стандартного вывода.
+18. 18Node.JS: WebSocket: разработка простейшего приложения: web-browser и WebSocket-сервер.
+19. 19Node.JS: WebSocket: разработка простейшего приложения: WebSocket-client и WebSocket-сервер. Процедура ping/pong.
+20. 20Node.JS: WebSocket: разработка простейшего приложения: WebSocket-client и широковещательный WebSocket-сервер.
+21. 21Node.JS: WebSocket: разработка клиента и сервера с пересылкой json-сообщений.
+22. 22Node.JS: WebSocket: разработка RPC-сервера.
+23. 23Node.JS: http-сервер: разработка сервера, выполняющего GET/SELECT-запросы к SQL-базе данных.
+24. 24Node.JS: http-сервер: разработка сервера, выполняющего POST/INSERT-запросы к SQL-базе данных.
+25. 25Node.JS: http-сервер: разработка сервера, выполняющего PUT/UPDATE-запросы к SQL-базе данных.
+26. 26Node.JS: http-сервер: разработка сервера, выполняющего DELETE/DELETE-запросы к SQL-базе данных.
+27. 27Node.JS: http-сервер: разработка сервера, выполняющего –запросы (читать, писать, изменять) к NoSQL-базе данных (Mongo DB).
+28. 28Node.JS: http-сервер: разработка сервера, обрабатывающего GraphQL-запросы (query и mutation).
+29. 29Node.JS: http-сервер: разработка сервера выполняющего запросы (читать, писать, изменять) к СУБД Redis.
+30. 30Node.JS: http-сервер: разработка сервера выполняющего Sequelize-запросы (читать, писать, изменять) к SQL-СУБД.
+31. 31Node.JS: Express: применение middleware, маршрутизация, шаблоны маршрутов.
+32. 32Node.JS: Express: обработка route (uri)-параметров.
+33. 33Node.JS: Express: http-сервер: обработка query-параметров.
+34. 34Node.JS: Express: http-сервер: обработка body-параметров (content-type: x-www-form-urlencoded.) POST-запроса.
+35. 35Node.JS: Express: http-сервер: обработка json-сообщений (content-type: application/json).
+36. 36Node.JS: Express: http-сервер: download статических файлов.
+37. 37Node.JS: Express: http-сервер: обработка Cookie, signed cookie.
+38. 38Node.JS: Express: http-сервер: переадресация (status: 301,307).
+39. 39Node.JS: Nest.JS: http-сервер: модуль, контроллер, сервис, фильтр.
+40. 40Node.JS: Nest.JS: http-сервер: модуль, контроллер, сервис (с применением TypeORM).

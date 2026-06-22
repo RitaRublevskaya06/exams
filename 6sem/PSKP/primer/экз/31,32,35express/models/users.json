@@ -1,0 +1,29 @@
+[
+    {
+        "id": 3,
+        "name": "Alex",
+        "surname": "Sergeev",
+        "address": {
+            "street": "Шугаева 13/1",
+            "city": "Минск"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Anna",
+        "surname": "Gritsenko",
+        "address": {
+            "street": "Шугаева 13/1",
+            "city": "Минск"
+        }
+    },
+    {
+        "id": 6,
+        "name": "Lena",
+        "surname": "Aleksandrovna",
+        "address": {
+            "street": "Шугаева 13/1",
+            "city": "Минск"
+        }
+    }
+]

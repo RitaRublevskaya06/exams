@@ -1,0 +1,157 @@
+:: ===== ЗАДАНИЕ 16 - Проверка 404 =====
+curl http://localhost:3000/
+curl http://localhost:3000/notfound
+
+:: ===== ЗАДАНИЕ 17 - Проверка методов HTTP =====
+curl -X GET http://localhost:3000/api/resource
+curl -X POST http://localhost:3000/api/resource
+curl -X PUT http://localhost:3000/api/resource
+curl -X DELETE http://localhost:3000/api/resource
+curl -X PATCH http://localhost:3000/api/resource
+
+:: ===== ЗАДАНИЕ 18 - Проверка route-параметров =====
+curl http://localhost:3000/users/123/posts/456
+curl http://localhost:3000/products/789
+
+:: ===== ЗАДАНИЕ 19 - Проверка query-параметров =====
+curl "http://localhost:3000/search?q=nodejs&page=2&limit=10"
+curl "http://localhost:3000/filter?category=books&price_min=100&price_max=500&inStock=true"
+
+:: ===== ЗАДАНИЕ 20 - Проверка body-параметров =====
+curl -X POST -d "username=john&email=john@test.com&age=25" http://localhost:3000/submit
+curl -X POST -d "name=Alice&email=alice@test.com&password=12345" http://localhost:3000/register
+
+:: ===== ЗАДАНИЕ 21 - Проверка JSON =====
+curl -X POST -H "Content-Type: application/json" -d "{\"name\":\"John\",\"age\":30,\"city\":\"Minsk\"}" http://localhost:3000/api/json
+curl -X GET http://localhost:3000/api/json
+
+:: ===== ЗАДАНИЕ 22 - Проверка download =====
+curl -O http://localhost:3000/download?file=test.txt
+
+:: ===== ЗАДАНИЕ 23 - Проверка upload =====
+curl -F "file=@C:\test.txt" http://localhost:3000/upload
+
+:: ===== ЗАДАНИЕ 24 - Проверка x-www-form-urlencoded =====
+curl -X POST -d "name=John&email=john@test.com&age=25&message=Hello" http://localhost:3000/form
+
+:: ===== ЗАДАНИЕ 25 - Проверка multipart/form-data =====
+curl -F "username=john" -F "file=@C:\file.txt" http://localhost:3000/upload
+
+:: ===== ЗАДАНИЕ 26-31 - Клиентские запросы =====
+:: (эти задания сами отправляют запросы при запуске)
+
+:: ===== ЗАДАНИЕ 32 - Проверка stdin/stdout =====
+:: (в консоли после запуска введите команды)
+:: stats
+:: help
+:: stop
+
+:: ===== ЗАДАНИЕ 33-37 - WebSocket =====
+:: (проверяются через браузер http://localhost:3000)
+
+:: ===== ЗАДАНИЕ 38 - SQL SELECT =====
+curl http://localhost:3000/users
+curl http://localhost:3000/users/1
+curl "http://localhost:3000/users/search?name=alice"
+
+:: ===== ЗАДАНИЕ 39 - SQL INSERT =====
+curl -X POST -H "Content-Type: application/json" -d "{\"name\":\"New Product\",\"price\":49.99,\"stock\":100}" http://localhost:3000/products
+
+:: ===== ЗАДАНИЕ 40 - SQL UPDATE =====
+curl -X PUT -H "Content-Type: application/json" -d "{\"name\":\"Updated\",\"price\":59.99}" http://localhost:3000/products/1
+curl -X PATCH -H "Content-Type: application/json" -d "{\"price\":79.99}" http://localhost:3000/products/1
+
+:: ===== ЗАДАНИЕ 41 - SQL DELETE =====
+curl -X DELETE http://localhost:3000/users/1
+curl -X DELETE "http://localhost:3000/users?confirm=true"
+
+:: ===== ЗАДАНИЕ 42 - MongoDB =====
+curl http://localhost:3000/items
+curl -X POST -H "Content-Type: application/json" -d "{\"name\":\"Test Item\",\"value\":123}" http://localhost:3000/items
+curl -X PUT -H "Content-Type: application/json" -d "{\"name\":\"Updated\"}" http://localhost:3000/items/ID
+curl -X DELETE http://localhost:3000/items/ID
+
+:: ===== ЗАДАНИЕ 43 - GraphQL =====
+curl -X POST -H "Content-Type: application/json" -d "{\"query\":\"{users{id,name}}\"}" http://localhost:3000/graphql
+curl -X POST -H "Content-Type: application/json" -d "{\"query\":\"mutation{createUser(name:\\\"New\\\",email:\\\"new@test.com\\\"){id,name}}\"}" http://localhost:3000/graphql
+
+:: ===== ЗАДАНИЕ 44 - Redis =====
+curl -X POST -H "Content-Type: application/json" -d "{\"key\":\"mykey\",\"value\":\"Hello\",\"ttl\":60}" http://localhost:3000/set
+curl http://localhost:3000/get/mykey
+curl -X POST -H "Content-Type: application/json" -d "{\"key\":\"counter\",\"by\":5}" http://localhost:3000/incr
+curl -X DELETE http://localhost:3000/del/mykey
+curl http://localhost:3000/keys
+
+:: ===== ЗАДАНИЕ 45 - Sequelize =====
+curl http://localhost:3000/products
+curl -X POST -H "Content-Type: application/json" -d "{\"name\":\"Sequelize Product\",\"price\":99.99,\"category\":\"Electronics\"}" http://localhost:3000/products
+curl -X PUT -H "Content-Type: application/json" -d "{\"price\":89.99}" http://localhost:3000/products/1
+curl -X DELETE http://localhost:3000/products/1
+
+:: ===== ЗАДАНИЕ 46 - Express middleware =====
+curl http://localhost:3000/users/123
+curl http://localhost:3000/users/123/posts/456
+curl "http://localhost:3000/search?q=express&page=2"
+curl http://localhost:3000/api/status
+curl http://localhost:3000/api/version
+
+:: ===== ЗАДАНИЕ 47 - Express route-параметры =====
+curl http://localhost:3000/users/123
+curl http://localhost:3000/users/123/posts/456
+curl http://localhost:3000/products/789
+curl http://localhost:3000/api/v2/resource/xyz
+curl http://localhost:3000/company/abc/def
+curl http://localhost:3000/profile/123
+
+:: ===== ЗАДАНИЕ 48 - Express query-параметры =====
+curl "http://localhost:3000/search?q=express&page=3&limit=15"
+curl "http://localhost:3000/filter?category=electronics&minPrice=100&maxPrice=1000&sort=price&inStock=true"
+curl "http://localhost:3000/products?ids=1&ids=2&ids=3"
+curl "http://localhost:3000/advanced?sort=name:desc&fields=id,name,price&embed=reviews"
+curl "http://localhost:3000/validate?email=test@test.com&minAge=18&maxAge=100"
+curl "http://localhost:3000/users/123/orders?status=paid&limit=5&offset=10"
+
+:: ===== ЗАДАНИЕ 49 - Express body-параметры =====
+curl -X POST -d "username=john&email=john@test.com&age=25&newsletter=on" http://localhost:3000/submit-form
+curl -X POST -d "name=John&email=john@test.com&password=secret123&confirmPassword=secret123" http://localhost:3000/register
+curl -X POST -H "Content-Type: application/json" -d "{\"personal\":{\"firstName\":\"John\",\"lastName\":\"Doe\"},\"address\":{\"city\":\"Minsk\"}}" http://localhost:3000/profile
+curl -X POST -H "Content-Type: application/json" -d "{\"action\":\"update\",\"items\":[1,2,3]}" http://localhost:3000/batch
+
+:: ===== ЗАДАНИЕ 50 - Express JSON =====
+curl -X POST -H "Content-Type: application/json" -d "{\"title\":\"Test\",\"content\":\"Hello\"}" http://localhost:3000/api/data
+curl -X POST -H "Content-Type: application/json" -d "{\"user\":{\"name\":\"Alice\",\"email\":\"alice@test.com\"},\"profile\":{\"bio\":\"Developer\"}}" http://localhost:3000/api/users
+curl http://localhost:3000/api/products
+curl "http://localhost:3000/api/search?q=test&category=books"
+curl -X POST -H "Content-Type: application/json" -d "{\"name\":\"John\",\"email\":\"john@test.com\",\"age\":25}" http://localhost:3000/api/validate
+
+:: ===== ЗАДАНИЕ 51 - Express static/download =====
+curl http://localhost:3000/style.css
+curl http://localhost:3000/script.js
+curl -O http://localhost:3000/download/style.css
+curl -O http://localhost:3000/download-attachment/style.css
+curl http://localhost:3000/files
+curl -X POST -H "Content-Type: application/json" -d "{\"filename\":\"new.txt\",\"content\":\"Hello\"}" http://localhost:3000/create-file
+
+:: ===== ЗАДАНИЕ 52 - Express cookie =====
+curl -c cookies.txt http://localhost:3000/set-cookie
+curl -b cookies.txt http://localhost:3000/get-cookies
+curl -c cookies.txt http://localhost:3000/set-signed-cookie
+curl -b cookies.txt http://localhost:3000/get-cookies
+curl -X POST -d "theme=dark&language=en" http://localhost:3000/settings
+curl http://localhost:3000/settings
+curl -X GET http://localhost:3000/clear-cookie/username
+
+:: ===== ЗАДАНИЕ 53 - Express redirect =====
+curl -L http://localhost:3000/old-page
+curl -L http://localhost:3000/temp-redirect
+curl -L http://localhost:3000/goto/google
+curl -X POST -L http://localhost:3000/submit-old
+curl -L "http://localhost:3000/search-old?q=test&page=2"
+curl -L http://localhost:3000/action
+
+:: ===== ЗАДАНИЕ 54-55 - NestJS =====
+curl http://localhost:3000/users
+curl http://localhost:3000/users/1
+curl -X POST -H "Content-Type: application/json" -d "{\"name\":\"Nest User\",\"email\":\"nest@test.com\",\"age\":25}" http://localhost:3000/users
+curl -X PUT -H "Content-Type: application/json" -d "{\"name\":\"Updated\",\"age\":30}" http://localhost:3000/users/1
+curl -X DELETE http://localhost:3000/users/1

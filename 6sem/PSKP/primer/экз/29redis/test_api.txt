@@ -1,0 +1,93 @@
+
+1. CREATE - Создать запись
+-----------------------------------------
+URI: POST http://localhost:3000/data/user:1
+Body (raw JSON):
+{
+  "value": {
+    "name": "Иван",
+    "age": 30,
+    "city": "Москва"
+  }
+}
+
+2. READ - Прочитать запись
+-----------------------------------------
+URI: GET http://localhost:3000/data/user:1
+Body: нет
+
+3. UPDATE - Обновить запись
+-----------------------------------------
+URI: PUT http://localhost:3000/data/user:1
+Body (raw JSON):
+{
+  "value": {
+    "name": "Иван",
+    "age": 31,
+    "city": "СПб"
+  }
+}
+
+4. DELETE - Удалить запись
+-----------------------------------------
+URI: DELETE http://localhost:3000/data/user:1
+Body: нет
+
+5. GET ALL KEYS - Все ключи
+-----------------------------------------
+URI: GET http://localhost:3000/keys
+Body: нет
+
+=========================================
+РАБОТА С ХЕШАМИ
+=========================================
+
+6. CREATE HASH - Создать хеш
+-----------------------------------------
+URI: POST http://localhost:3000/hash/user:100
+Body (raw JSON):
+{
+  "name": "Петр",
+  "age": 25,
+  "city": "Казань"
+}
+
+7. GET HASH - Весь хеш
+-----------------------------------------
+URI: GET http://localhost:3000/hash/user:100
+Body: нет
+
+8. GET FIELD - Одно поле хеша
+-----------------------------------------
+URI: GET http://localhost:3000/hash/user:100/name
+Body: нет
+
+9. UPDATE FIELD - Обновить поле
+-----------------------------------------
+URI: PUT http://localhost:3000/hash/user:100/age
+Body (raw JSON):
+{
+  "value": 26
+}
+
+10. DELETE FIELD - Удалить поле
+-----------------------------------------
+URI: DELETE http://localhost:3000/hash/user:100/city
+Body: нет
+
+=========================================
+ОШИБКИ (для теста)
+=========================================
+
+11. Несуществующий ключ
+-----------------------------------------
+URI: GET http://localhost:3000/data/notexist
+Body: нет
+Ожидаемый ответ: 404
+
+12. CREATE без поля value
+-----------------------------------------
+URI: POST http://localhost:3000/data/user:1
+Body (raw JSON):
+{}
+Ожидаемый ответ: 400

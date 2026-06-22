@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Parameter</title>
+     <script>
+    function showLocationProperties() {
+  let output = "";
+  for (let prop in location) {
+    if (prop === "search" || prop === "hash") continue;
+    let value = location[prop];
+    if (typeof value === "string" || typeof value === "number") {
+      output += `${prop}: ${value}\n`;
+    }
+  }
+  alert(output);
+}
+
+      window.onload = () => {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (event) => {
+           
+          showLocationProperties();
+        });
+      };
+    </script>
+</head>
+<body>
+<form action="/formparameter" method="POST">
+    <label for="textInput">Text Input:</label>
+    <input type="text" id="textInput" name="textInput"><br><br>
+
+    <label for="numberInput">Number Input:</label>
+    <input type="number" id="numberInput" name="numberInput"><br><br>
+
+    <label for="dateInput">Date Input:</label>
+    <input type="date" id="dateInput" name="dateInput"><br><br>
+
+    <label for="checkboxInput">Checkbox:</label>
+    <input type="checkbox" id="checkboxInput" name="checkboxInput" value="checked"><br><br>
+
+    <label>Radio Buttons:</label><br>
+    <input type="radio" id="radio1" name="radioInput" value="Option 1">
+    <label for="radio1">Option 1</label><br>
+    <input type="radio" id="radio2" name="radioInput" value="Option 2">
+    <label for="radio2">Option 2</label><br><br>
+
+    <label for="textareaInput">Textarea:</label><br>
+    <textarea id="textareaInput" name="textareaInput" rows="4" cols="30"></textarea><br><br>
+
+    <input type="submit" name="submitButton" value="Submit 1">
+    <input type="submit" name="submitButton" value="Submit 2">
+</form>
+</body>
+</html>

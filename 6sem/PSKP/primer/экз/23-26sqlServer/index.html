@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Кафедры</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 1000px; 
+            margin: 20px auto; 
+            padding: 20px; 
+        }
+        .form-panel { 
+            background: #f5f5f5; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 20px 0; 
+        }
+        .form-row { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 15px; 
+        }
+        input { 
+            flex: 1; 
+            padding: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+        .controls { 
+            display: flex; 
+            gap: 10px; 
+            margin: 20px 0; 
+            flex-wrap: wrap; 
+        }
+        button { 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 14px; 
+        }
+        .get-btn { background: #2196F3; color: white; }
+        .post-btn { background: #4CAF50; color: white; }
+        .put-btn { background: #FF9800; color: white; }
+        .delete-btn { background: #f44336; color: white; }
+        .status { 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 4px; 
+            display: none; 
+        }
+        .error { background: #ffebee; color: #c62828; border-left: 4px solid #f44336; }
+        .success { background: #e8f5e8; color: #2e7d32; border-left: 4px solid #4caf50; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 12px; 
+            text-align: left; 
+        }
+        th { background: #4CAF50; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        tr:hover { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Управление кафедрами</h1>
+    
+    <div class="form-panel">
+        <div class="form-row">
+            <input type="text" id="pulpit" placeholder="Код кафедры (PULPIT)">
+            <input type="text" id="pulpit_name" placeholder="Название кафедры">
+            <input type="text" id="faculty" placeholder="Код факультета">
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="get-btn" onclick="getPulpits()">📥 Загрузить</button>
+        <button class="post-btn" onclick="postPulpit()">➕ Добавить</button>
+        <button class="put-btn" onclick="putPulpit()">✏️ Обновить</button>
+        <button class="delete-btn" onclick="deletePulpit()">🗑️ Удалить</button>
+    </div>
+    
+    <div id="status" class="status"></div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Код</th>
+                <th>Название</th>
+                <th>Факультет</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <script>
+        function showStatus(msg, type = 'error') {
+            const status = document.getElementById('status');
+            status.textContent = msg;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            setTimeout(() => status.style.display = 'none', 4000);
+        }
+
+        function showResult(data) {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${row.PULPIT || ''}</strong></td>
+                        <td>${row.PULPIT_NAME || ''}</td>
+                        <td>${row.FACULTY || ''}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;padding:20px;color:#666">Нет данных</td></tr>';
+            }
+        }
+
+        async function getPulpits() {
+            try {
+                const res = await fetch('/api/pulpits');
+                const data = await res.json();
+                if (data.error) showStatus(data.error);
+                else showResult(data);
+            } catch (e) { showStatus(`Ошибка: ${e.message}`); }
+        }
+
+        async function postPulpit() {
+            const pulpit = document.getElementById('pulpit').value.trim();
+            const pulpitName = document.getElementById('pulpit_name').value.trim();
+            const faculty = document.getElementById('faculty').value.trim();
+            
+            if (!pulpit || !pulpitName || !faculty) {
+                showStatus('Заполните все поля');
+                return;
+            }
+            
+            try {
+                const res = await fetch('/api/pulpits', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ PULPIT: pulpit, PULPIT_NAME: pulpitName, FACULTY: faculty })
+                });
+                const data = await res.json();
+                if (data.error) showStatus(data.error);
+                else {
+                    showStatus('Добавлено!', 'success');
+                    document.getElementById('pulpit').value = '';
+                    document.getElementById('pulpit_name').value = '';
+                    document.getElementById('faculty').value = '';
+                    getPulpits();
+                }
+            } catch (e) { showStatus(`Ошибка: ${e.message}`); }
+        }
+
+        async function putPulpit() {
+            const pulpit = document.getElementById('pulpit').value.trim();
+            if (!pulpit) return showStatus('Введите код кафедры');
+            
+            try {
+                const res = await fetch('/api/pulpits', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        PULPIT: pulpit,
+                        PULPIT_NAME: document.getElementById('pulpit_name').value,
+                        FACULTY: document.getElementById('faculty').value
+                    })
+                });
+                const data = await res.json();
+                if (data.error) showStatus(data.error);
+                else {
+                    showStatus('Обновлено!', 'success');
+                    getPulpits();
+                }
+            } catch (e) { showStatus(`Ошибка: ${e.message}`); }
+        }
+
+        async function deletePulpit() {
+            const id = document.getElementById('pulpit').value.trim();
+            if (!id) return showStatus('Введите код кафедры');
+            if (!confirm(`Удалить ${id}?`)) return;
+            
+            try {
+                const res = await fetch(`/api/pulpits/${id}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.error) showStatus(data.error);
+                else {
+                    showStatus('Удалено!', 'success');
+                    getPulpits();
+                }
+            } catch (e) { showStatus(`Ошибка: ${e.message}`); }
+        }
+
+        getPulpits();
+    </script>
+</body>
+</html>

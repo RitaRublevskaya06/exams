@@ -1,0 +1,252 @@
+// // ПРАКТИЧЕСКИЙ КОД ПО ВОПРОСАМ 20-38
+// // Задания 20-38: HTTP сервер со всеми возможностями
+
+// package main
+
+// import (
+// 	"database/sql"
+// 	"encoding/json"
+// 	"fmt"
+// 	"io"
+// 	"log"
+// 	"net/http"
+// 	"os"
+
+// 	"github.com/gorilla/mux"
+// 	"github.com/gorilla/websocket"
+// 	"github.com/graph-gophers/graphql-go"
+// 	"github.com/graph-gophers/graphql-go/relay"
+// 	_ "github.com/microsoft/go-mssqldb"
+// 	"golang.org/x/net/webdav"
+// 	"gorm.io/driver/sqlite"
+// 	"gorm.io/gorm"
+// )
+
+// // ========== ЗАДАНИЕ 20: database/sql ==========
+// type DBRepository struct {
+// 	db *sql.DB
+// }
+
+// func NewDBRepository(connStr string) (*DBRepository, error) {
+// 	db, err := sql.Open("sqlserver", connStr)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	return &DBRepository{db: db}, nil
+// }
+
+// // ========== ЗАДАНИЕ 21: GORM ==========
+// type ProductGORM struct {
+// 	gorm.Model
+// 	Name  string
+// 	Price float64
+// }
+
+// func initGORM() *gorm.DB {
+// 	db, _ := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+// 	db.AutoMigrate(&ProductGORM{})
+// 	return db
+// }
+
+// // ========== ЗАДАНИЕ 22-23: net/http базовый сервер ==========
+// func basicHandler(w http.ResponseWriter, r *http.Request) {
+// 	log.Printf("[%s] Request: %s", r.Method, r.URL.Path)
+// 	fmt.Fprintf(w, "Path: %s", r.URL.Path)
+// }
+
+// // ========== ЗАДАНИЕ 24: POST JSON ==========
+// type UserJSON struct {
+// 	Name  string `json:"name"`
+// 	Email string `json:"email"`
+// }
+
+// func handlePostJSON(w http.ResponseWriter, r *http.Request) {
+// 	if r.Method != http.MethodPost {
+// 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+// 		return
+// 	}
+// 	var u UserJSON
+// 	json.NewDecoder(r.Body).Decode(&u)
+// 	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode(u)
+// }
+
+// // ========== ЗАДАНИЕ 25-32: gorilla/mux полный набор ==========
+// func handlePathParam(w http.ResponseWriter, r *http.Request) {
+// 	vars := mux.Vars(r)
+// 	id := vars["id"]
+// 	fmt.Fprintf(w, "Path param id: %s", id)
+// }
+
+// func handleQueryParam(w http.ResponseWriter, r *http.Request) {
+// 	query := r.URL.Query()
+// 	name := query.Get("name")
+// 	fmt.Fprintf(w, "Query param name: %s", name)
+// }
+
+// func handleFormEncoded(w http.ResponseWriter, r *http.Request) {
+// 	r.ParseForm()
+// 	name := r.FormValue("name")
+// 	fmt.Fprintf(w, "Form name: %s", name)
+// }
+
+// func handleMultipart(w http.ResponseWriter, r *http.Request) {
+// 	r.ParseMultipartForm(10 << 20)
+// 	file, handler, _ := r.FormFile("file")
+// 	defer file.Close()
+// 	dst, _ := os.Create("./uploads/" + handler.Filename)
+// 	io.Copy(dst, file)
+// 	fmt.Fprintf(w, "Uploaded: %s", handler.Filename)
+// }
+
+// func handleDownload(w http.ResponseWriter, r *http.Request) {
+// 	vars := mux.Vars(r)
+// 	filename := vars["filename"]
+// 	http.ServeFile(w, r, "./static/"+filename)
+// }
+
+// // ========== ЗАДАНИЕ 33: JSON-RPC ==========
+// type JSONRPCRequestV2 struct {
+// 	JSONRPC string          `json:"jsonrpc"`
+// 	Method  string          `json:"method"`
+// 	Params  json.RawMessage `json:"params"`
+// 	ID      int             `json:"id"`
+// }
+
+// func handleJSONRPCV2(w http.ResponseWriter, r *http.Request) {
+// 	var req JSONRPCRequestV2
+// 	json.NewDecoder(r.Body).Decode(&req)
+
+// 	var result interface{}
+// 	if req.Method == "add" {
+// 		var params []int
+// 		json.Unmarshal(req.Params, &params)
+// 		if len(params) >= 2 {
+// 			result = params[0] + params[1]
+// 		}
+// 	}
+
+// 	resp := map[string]interface{}{
+// 		"jsonrpc": "2.0",
+// 		"result":  result,
+// 		"id":      req.ID,
+// 	}
+// 	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode(resp)
+// }
+
+// // ========== ЗАДАНИЕ 34-35: WebSocket ==========
+// var upgraderWS = websocket.Upgrader{
+// 	CheckOrigin: func(r *http.Request) bool { return true },
+// }
+
+// func handleWebSocketEcho(w http.ResponseWriter, r *http.Request) {
+// 	conn, _ := upgraderWS.Upgrade(w, r, nil)
+// 	defer conn.Close()
+// 	for {
+// 		_, msg, err := conn.ReadMessage()
+// 		if err != nil {
+// 			break
+// 		}
+// 		conn.WriteMessage(websocket.TextMessage, []byte("Echo: "+string(msg)))
+// 	}
+// }
+
+// // ========== ЗАДАНИЕ 36: WebDAV ==========
+// func startWebDAVServer() {
+// 	fs := webdav.Dir("./webdav_data")
+// 	handler := &webdav.Handler{
+// 		FileSystem: fs,
+// 		LockSystem: webdav.NewMemLS(),
+// 	}
+// 	go http.ListenAndServe(":8081", handler)
+// }
+
+// // ========== ЗАДАНИЕ 37: GraphQL ==========
+// var graphQLSchema = `
+//     type Query {
+//         hello: String!
+//     }
+//     type Mutation {
+//         echo(msg: String!): String!
+//     }
+// `
+
+// type GraphQLResolver struct{}
+
+// func (r *GraphQLResolver) Hello() string {
+// 	return "Hello, GraphQL!"
+// }
+
+// func (r *GraphQLResolver) Echo(args struct{ Msg string }) string {
+// 	return "Echo: " + args.Msg
+// }
+
+// func startGraphQLServer() {
+// 	schema := graphql.MustParseSchema(graphQLSchema, &GraphQLResolver{})
+// 	handler := &relay.Handler{Schema: schema}
+// 	http.Handle("/graphql", handler)
+// }
+
+// // ========== ЗАДАНИЕ 38: Iris + Swagger (имитация) ==========
+// // Полный пример в отдельном файле (требует kataras/iris)
+
+// // ========== MAIN ==========
+// func main() {
+// 	// Создание директорий
+// 	os.MkdirAll("./static", 0755)
+// 	os.MkdirAll("./uploads", 0755)
+// 	os.MkdirAll("./webdav_data", 0755)
+
+// 	// Инициализация БД (задание 20-21)
+// 	gormDB := initGORM()
+// 	gormDB.Create(&ProductGORM{Name: "Sample", Price: 99.99})
+
+// 	// Запуск WebDAV (задание 36)
+// 	startWebDAVServer()
+
+// 	// Запуск GraphQL (задание 37)
+// 	startGraphQLServer()
+
+// 	// Основной роутер
+// 	r := mux.NewRouter()
+
+// 	// Базовые маршруты (22-23)
+// 	r.HandleFunc("/", basicHandler)
+
+// 	// POST JSON (24)
+// 	r.HandleFunc("/api/json", handlePostJSON).Methods("POST")
+
+// 	// Path и Query параметры (28-29, 32)
+// 	r.HandleFunc("/api/users/{id}", handlePathParam).Methods("GET")
+// 	r.HandleFunc("/api/search", handleQueryParam).Methods("GET")
+
+// 	// Form data (26, 31)
+// 	r.HandleFunc("/api/form", handleFormEncoded).Methods("POST")
+// 	r.HandleFunc("/api/upload", handleMultipart).Methods("POST")
+
+// 	// Скачивание файлов (30)
+// 	r.HandleFunc("/download/{filename}", handleDownload).Methods("GET")
+// 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
+
+// 	// JSON-RPC (33)
+// 	r.HandleFunc("/jsonrpc", handleJSONRPCV2).Methods("POST")
+
+// 	// WebSocket (34-35)
+// 	r.HandleFunc("/ws", handleWebSocketEcho)
+
+// 	// Дополнительные маршруты (27)
+// 	r.HandleFunc("/api/products", func(w http.ResponseWriter, r *http.Request) {
+// 		w.Header().Set("Content-Type", "application/json")
+// 		json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
+// 	}).Methods("GET", "POST", "PUT", "DELETE")
+
+// 	// Старт сервера
+// 	log.Println("Main server on :8080")
+// 	log.Println("WebSocket on ws://localhost:8080/ws")
+// 	log.Println("WebDAV on :8081")
+// 	log.Println("GraphQL on http://localhost:8080/graphql")
+// 	log.Println("JSON-RPC on http://localhost:8080/jsonrpc")
+
+// 	log.Fatal(http.ListenAndServe(":8080", r))
+// }

@@ -1,0 +1,162 @@
+1) Нажмите Ctrl + Shift + F
+2) Нажмите на маленькую стрелочку (или иконку *. **), чтобы включить режим регулярных выражений (Regex).
+3) В поле Search вставьте регулярное выражение: //.*
+примечание при жатии на стрелочку объязательно нажать ".*" в поле "Найти" (это кнопочка)
+
+:: Для всех заданий с WebSocket (33-37)
+npm install ws
+
+:: Для заданий 31 (upload)
+npm install form-data
+
+:: Для заданий 38-45 (базы данных)
+npm install pg mongodb redis sequelize
+
+:: Для заданий 46-53 (Express)
+npm install express cookie-parser
+
+:: Глобальная установка nodemon
+npm install -g nodemon
+
+
+
+# Задание 16 - Простейший HTTP сервер с 404
+node 16/16_http_server_404.js
+
+# Задание 17 - HTTP сервер с маршрутизацией и 405
+node 17/17_http_server_405.js
+
+# Задание 18 - Обработка route-параметров
+node 18/18_http_server_route_params.js
+# Тестирование: curl http://localhost:3000/users/123/posts/456
+
+# Задание 19 - Обработка query-параметров
+node 19/19_http_server_query_params.js
+# Тестирование: curl "http://localhost:3000/search?q=nodejs&page=2"
+
+# Задание 20 - Обработка body-параметров
+node 20/20_http_server_body_params.js
+# Тестирование: curl -X POST -d "name=John&email=test@test.com" http://localhost:3000/submit
+
+# Задание 21 - JSON сообщения
+node 21/21_http_server_json.js
+# Тестирование: curl -X POST -H "Content-Type: application/json" -d '{"name":"John"}' http://localhost:3000/api/json
+
+# Задание 22 - Download файлов
+node 22_http_server_download.js
+# Открыть браузер: http://localhost:3000
+
+# Задание 23 - Upload файлов
+node 23_http_server_upload.js
+# Открыть браузер: http://localhost:3000
+
+# Задание 24 - x-www-form-urlencoded
+node 24_http_server_urlencoded.js
+# Открыть браузер: http://localhost:3000
+
+# Задание 25 - multipart/form-data
+node 25_http_server_multipart.js
+# Открыть браузер: http://localhost:3000
+
+# Задание 26 - HTTP клиент с route-параметрами
+node 26_http_client_route_params.js
+
+# Задание 27 - HTTP клиент с query-параметрами
+node 27_http_client_query_params.js
+
+# Задание 28 - HTTP клиент с body-параметрами
+node 28_http_client_body_params.js
+
+# Задание 29 - HTTP клиент с JSON
+node 29_http_client_json.js
+
+# Задание 30 - HTTP клиент download
+node 30_http_client_download.js
+
+# Задание 31 - HTTP клиент upload
+node 31_http_client_upload.js
+
+# Задание 32 - HTTP сервер с stdin/stdout
+node 32_http_server_stdio.js
+# В консоли можно вводить команды: stats, stop, help
+
+# Задание 33 - WebSocket браузер + сервер
+node 33_websocket_browser.js
+# Открыть браузер: http://localhost:3000
+
+# Задание 34 - WebSocket ping/pong
+node 34_websocket_ping_pong.js
+
+# Задание 35 - Широковещательный WebSocket
+node 35_websocket_broadcast.js
+# Открыть несколько вкладок: http://localhost:3000
+
+# Задание 36 - WebSocket JSON сообщения
+node 36_websocket_json.js
+# Открыть браузер: http://localhost:3000
+
+# Задание 37 - WebSocket RPC сервер
+node 37_websocket_rpc.js
+# Открыть браузер: http://localhost:3000
+
+
+
+# Node.js должен быть установлен
+node --version
+npm --version
+
+# Установка пакетов для заданий
+npm install -g nodemon # для автоматического перезапуска
+
+
+# PostgreSQL (38-41, 45)
+# Windows: скачать с https://www.postgresql.org/download/
+# macOS: brew install postgresql
+# Linux: sudo apt install postgresql
+
+# Запуск PostgreSQL
+sudo service postgresql start
+# Создание базы данных
+createdb testdb
+# Подключение: psql -U postgres -d testdb
+
+# MongoDB (42)
+# Установка: https://www.mongodb.com/try/download/community
+mongod --dbpath ~/data/db
+
+# Redis (44)
+# Установка: https://redis.io/download
+redis-server
+
+
+# Для заданий 16-45 (нативные модули)
+node 16_http_server_404.js
+
+# Для заданий 46-53 (Express)
+node 46_express_middleware_routes.js
+
+# Для заданий 54-55 (NestJS)
+cd nest-app
+npm run start:dev
+
+
+# GET запрос
+curl http://localhost:3000/users
+
+# POST с JSON
+curl -X POST -H "Content-Type: application/json" -d '{"name":"John"}' http://localhost:3000/api/users
+
+# POST с form-urlencoded
+curl -X POST -d "name=John&email=john@test.com" http://localhost:3000/submit-form
+
+# PUT запрос
+curl -X PUT -H "Content-Type: application/json" -d '{"name":"Updated"}' http://localhost:3000/users/1
+
+# DELETE запрос
+curl -X DELETE http://localhost:3000/users/1
+
+# Скачивание файла
+curl -O http://localhost:3000/download/test.txt
+
+
+

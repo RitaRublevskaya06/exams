@@ -1,0 +1,111 @@
+Тела у тебя уже в коллекции заданы нормально, ниже собрал их в «чистом» виде, как удобно копировать прямо в Postman (Body → raw → JSON).  
+GET и DELETE без тела, только POST и PUT.
+
+## Faculties
+
+### POST /api/faculties
+```json
+{
+  "FACULTY": "ИТ",
+  "FACULTY_NAME": "Информационных технологий"
+}
+```
+
+### PUT /api/faculties
+```json
+{
+  "FACULTY": "ИТ",
+  "FACULTY_NAME": "Информационных технологий(NEW)"
+}
+```
+
+***
+
+## Pulpits
+
+### POST /api/pulpits
+```json
+{
+  "PULPIT": "ПИ",
+  "PULPIT_NAME": "Программная инженерия",
+  "FACULTY": "ИДиП"
+}
+```
+
+### PUT /api/pulpits
+```json
+{
+  "PULPIT": "ПИ",
+  "PULPIT_NAME": "Программная инженерия (NEW)",
+  "FACULTY": "ИДиП"
+}
+```
+
+***
+
+## Subjects
+
+### POST /api/subjects
+```json
+{
+  "SUBJECT": "КПО",
+  "SUBJECT_NAME": "Конструирование программного обеспечения",
+  "PULPIT": "ИСиТ"
+}
+```
+
+### PUT /api/subjects
+```json
+{
+  "SUBJECT": "КПО",
+  "SUBJECT_NAME": "Конструирование программного обеспечения (NEW)",
+  "PULPIT": "ИСиТ"
+}
+```
+
+***
+
+## Auditorium types
+
+### POST /api/auditoriumstypes
+```json
+{
+  "AUDITORIUM_TYPE": "ЛБ-Н",
+  "AUDITORIUM_TYPENAME": "Новая лаборатория"
+}
+```
+
+### PUT /api/auditoriumstypes
+```json
+{
+  "AUDITORIUM_TYPE": "ЛБ-Н",
+  "AUDITORIUM_TYPENAME": "Новая лаборатория (NEW)"
+}
+```
+
+***
+
+## Auditoriums
+
+### POST /api/auditoriums
+```json
+{
+  "AUDITORIUM": "200-3a",
+  "AUDITORIUM_NAME": "200-3a",
+  "AUDITORIUM_CAPACITY": 200,
+  "AUDITORIUM_TYPE": "ЛК"
+}
+```
+
+### PUT /api/auditoriums
+```json
+{
+  "AUDITORIUM": "200-3a",
+  "AUDITORIUM_NAME": "200-3a",
+  "AUDITORIUM_CAPACITY": 2000,
+  "AUDITORIUM_TYPE": "ЛК"
+}
+```
+
+DELETE‑запросы в Postman делай без Body, только URL, например:  
+`DELETE {{baseURL}}/api/pulpits/ПИ`

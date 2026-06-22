@@ -1,0 +1,150 @@
+
+  "QUERIES":
+ 
+
+    //getAllFaculties
+
+ {  "query": "query { getFaculties { FACULTY FACULTY_NAME } }"}
+
+    //getFacultyByCode
+
+ {"query": "query ($fac: String) { getFaculties(FACULTY: $fac) { FACULTY FACULTY_NAME } }",
+      "variables": {
+        "fac": "ИТ"
+      }
+    }
+
+    //getAllPulpits
+
+ {"query": "query { getPulpits { PULPIT PULPIT_NAME FACULTY } }"}
+
+
+    //getPulpitByCode
+
+ { "query": "query ($p: String) { getPulpits(PULPIT: $p) { PULPIT PULPIT_NAME FACULTY } }",
+      "variables": {
+        "p": "ИСиТ"
+      }
+    }
+
+
+    //getAllTeachers
+
+ {"query": "query { getTeachers { TEACHER TEACHER_NAME PULPIT } }"}
+
+
+    //getTeacherByCode
+
+{ "query": "query ($t: String) { getTeachers(TEACHER: $t) { TEACHER TEACHER_NAME PULPIT } }",
+      "variables": {
+        "t": "БРТШВЧ"
+      }
+    }
+
+
+    //getAllSubjects"
+
+{ "query": "query { getSubjects { SUBJECT SUBJECT_NAME PULPIT } }" }
+
+
+
+    //getSubjectByCode
+
+ {"query": "query ($s: String) { getSubjects(SUBJECT: $s) { SUBJECT SUBJECT_NAME PULPIT } }",
+      "variables": {
+        "s": "БД"} }
+
+
+    //getTeachersByFaculty
+
+ {"query": "query ($fac: String!) { getTeachersByFaculty(FACULTY: $fac) { FACULTY TEACHERS { TEACHER TEACHER_NAME PULPIT } } }",
+      "variables": {
+        "fac": "ИДиП"
+      }}
+
+
+    //getSubjectsByFaculty
+
+ { "query": "query ($fac: String!) { getSubjectsByFaculties(FACULTY: $fac) { PULPIT PULPIT_NAME FACULTY SUBJECTS { SUBJECT SUBJECT_NAME } } }",
+      "variables": {
+        "fac": "ИТ"
+      }
+    }
+  }
+
+
+  "MUTATIONS": 
+
+   // setFaculty
+
+ { "mutation": "mutation ($f: String!, $n: String!) { setFaculty(FACULTY: $f, FACULTY_NAME: $n) { FACULTY FACULTY_NAME } }",
+      "variables": {
+        "f": "FIT",
+        "n": "Факультет информационных технологий"
+      }
+    }
+
+
+    //setPulpit
+
+ {"mutation": "mutation ($p: String!, $n: String!, $f: String!) { setPulpit(PULPIT: $p, PULPIT_NAME: $n, FACULTY: $f) { PULPIT PULPIT_NAME FACULTY } }",
+      "variables": {
+        "p": "ISIT",
+        "n": "Информационные системы",
+        "f": "FIT"
+      }
+    }
+
+    //setTeacher
+
+{"mutation": "mutation ($t: String!, $n: String!, $p: String!) { setTeacher(TEACHER: $t, TEACHER_NAME: $n, PULPIT: $p) { TEACHER TEACHER_NAME PULPIT } }",
+      "variables": {
+        "t": "IVANOV",
+        "n": "Иванов И.И.",
+        "p": "ISIT"
+      }
+    }
+
+
+    //setSubject
+
+ {"mutation": "mutation ($s: String!, $n: String!, $p: String!) { setSubject(SUBJECT: $s, SUBJECT_NAME: $n, PULPIT: $p) { SUBJECT SUBJECT_NAME PULPIT } }",
+      "variables": {
+        "s": "DB",
+        "n": "Базы данных",
+        "p": "ISIT"
+      }
+    }
+
+    //delFaculty
+
+{"mutation": "mutation ($f: String!) { delFaculty(FACULTY: $f) { FACULTY FACULTY_NAME } }",
+      "variables": {
+        "f": "FIT"
+      }
+    }
+
+    //delPulpit
+
+ {"mutation": "mutation ($p: String!) { delPulpit(PULPIT: $p) { PULPIT PULPIT_NAME FACULTY } }",
+      "variables": {
+        "p": "ISIT"
+      }
+    }
+
+   // delTeacher
+
+{ "mutation": "mutation ($t: String!) { delTeacher(TEACHER: $t) { TEACHER TEACHER_NAME PULPIT } }",
+      "variables": {
+        "t": "IVANOV"
+      }
+    }
+
+    //delSubject
+
+{"mutation": "mutation ($s: String!) { delSubject(SUBJECT: $s) { SUBJECT SUBJECT_NAME PULPIT } }",
+      "variables": {
+        "s": "DB"
+      }
+    }
+  
